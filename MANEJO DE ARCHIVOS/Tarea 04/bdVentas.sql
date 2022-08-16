@@ -1,0 +1,30 @@
+-- SENTENCIAS SQL PARA SQLSERVER
+DROP DATABASE IF EXISTS Ventas
+
+CREATE DATABASE Ventas
+
+USE Ventas
+
+CREATE TABLE Cliente(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Direccion VARCHAR(75),
+    Telefono VARCHAR(12),
+    Ciudad VARCHAR(50) NOT NULL DEFAULT 'CIUDAD' 
+
+)
+
+CREATE TABLE Venta( 
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Cantidad INT NOT NULL
+
+)
+
+CREATE TABLE Producto(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    nombre_producto VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(150),
+    Precio DECIMAL(5,2) NOT NULL
+)
+

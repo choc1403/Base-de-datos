@@ -1,0 +1,61 @@
+-- CREACION DE LA BASE DE DATOS
+DROP DATABASE IF EXISTS Biblioteca
+CREATE DATABASE Biblioteca
+
+USE Biblioteca
+
+
+-- CREACION DE LAS TABLAS
+CREATE TABLE Socio(
+	numSocio INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Nombre VARCHAR(25) NOT NULL,
+	Apellido VARCHAR(25) NOT NULL,
+	Direccion VARCHAR(75) NOT NULL,
+	Telefono VARCHAR(12) NOT NULL
+);
+
+CREATE TABLE Autor(
+	Id INT PRIMARY KEY NOT NULL,
+	Nombre VARCHAR(25) NOT NULL,
+	Apellido VARCHAR(25) NOT NULL,
+	fecha_nacimiento DATE NOT NULL,
+	fecha_fallecimiento DATE
+
+);
+
+
+CREATE TABLE Libro(
+	ISBN INT PRIMARY KEY NOT NULL,
+	Titulo VARCHAR(50) NOT NULL,
+	numPaginas INT NOT NULL,
+	fecha_limite DATE NOT NULL,
+	idAutor INT NOT NULL
+
+	CONSTRAINT fk_autor FOREIGN KEY (idAutor) REFERENCES Autor(Id) ON DELETE CASCADE
+
+);
+
+
+CREATE TABLE tipo_autor(
+	idTipo INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	idAutor INT NOT NULL,
+	idLibro INT NOT NULL,
+
+	Tipo VARCHAR(25) 
+		 CHECK(Tipo IN ('autor principal', 'coautor', 'prologuista', 'traductor', 'compilador'))
+
+	CONSTRAINT fk_autors FOREIGN KEY (idAutor) REFERENCES Autor(Id) ON DELETE CASCADE,
+	CONSTRAINT fk_libros FOREIGN KEY (idLibro) REFERENCES Libro(ISBN) 
+);
+
+
+CREATE TABLE Prestamo(
+	idPrestamo INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	fecha_prestamo DATE NOT NULL,
+	fecha_devolucion DATE NOT NULL,
+	idSocio INT NOT NULL,
+	idLibro INT NOT NULL
+
+	CONSTRAINT fk_socio FOREIGN KEY (idSocio) REFERENCES Socio(numSocio) ON DELETE CASCADE,
+	CONSTRAINT fk_libro FOREIGN KEY (idLibro) REFERENCES Libro(ISBN) ON DELETE CASCADE
+);
